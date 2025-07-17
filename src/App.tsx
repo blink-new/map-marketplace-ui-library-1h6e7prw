@@ -11,6 +11,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { MapContainer } from '@/components/map/MapContainer'
 import { LocationPin } from '@/components/map/LocationPin'
 import { MapControls } from '@/components/map/MapControls'
+import { PinVariantsShowcase } from '@/components/map/PinVariants'
+import { AnimatedPinGroup } from '@/components/map/PinGroup'
 import { ListingCard } from '@/components/marketplace/ListingCard'
 import { SearchOverlay } from '@/components/marketplace/SearchOverlay'
 import { PriceTag } from '@/components/marketplace/PriceTag'
@@ -147,25 +149,33 @@ function App() {
                     </CardContent>
                   </Card>
 
-                  {/* LocationPin */}
+                  {/* LocationPin Variants */}
                   <Card>
                     <CardHeader>
-                      <CardTitle>LocationPin</CardTitle>
+                      <CardTitle>LocationPin Collection</CardTitle>
                       <CardDescription>
-                        Customizable location pins with different sizes, colors, and states
+                        Comprehensive collection of location pins with different variants, sizes, colors, and specialized use cases
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex items-end gap-8 rounded-lg border p-8">
-                        <LocationPin size="sm" color="primary" label="Small" />
-                        <LocationPin size="md" color="accent" label="Medium" />
-                        <LocationPin size="lg" color="destructive" label="Large" active />
+                    <CardContent className="space-y-6">
+                      {/* Animated Demo */}
+                      <div className="rounded-lg border p-6">
+                        <h4 className="text-sm font-medium mb-4">Interactive Demo</h4>
+                        <div className="flex justify-center">
+                          <AnimatedPinGroup />
+                        </div>
                       </div>
+                      
+                      {/* Full Showcase */}
+                      <div className="rounded-lg border p-6">
+                        <PinVariantsShowcase />
+                      </div>
+                      
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => copyToClipboard(
-                          `<LocationPin size="md" color="primary" label="Location" />`,
+                          `<LocationPin variant="classic" size="md" color="primary" label="Location" />`,
                           'LocationPin'
                         )}
                       >
