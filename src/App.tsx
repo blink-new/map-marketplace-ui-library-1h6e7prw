@@ -16,6 +16,8 @@ import { SearchOverlay } from '@/components/marketplace/SearchOverlay'
 import { PriceTag } from '@/components/marketplace/PriceTag'
 import { RatingStars } from '@/components/marketplace/RatingStars'
 import { CategoryFilter } from '@/components/marketplace/CategoryFilter'
+import { LocationSearch, PriceRange, DatePicker } from '@/components/forms'
+import { Grid, Container, Flex } from '@/components/layout'
 
 // Import icons
 import * as Icons from '@/components/icons'
@@ -93,10 +95,11 @@ function App() {
       {/* Main content */}
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="components" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="components">Components</TabsTrigger>
             <TabsTrigger value="icons">Icons</TabsTrigger>
             <TabsTrigger value="examples">Examples</TabsTrigger>
+            <TabsTrigger value="docs">Documentation</TabsTrigger>
           </TabsList>
 
           {/* Components Tab */}
@@ -118,7 +121,17 @@ function App() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="rounded-lg border p-4">
-                        <MapContainer height="300px" />
+                        <MapContainer height="300px">
+                          <div className="absolute top-4 right-4">
+                            <MapControls 
+                              onZoomIn={() => console.log('Zoom in')}
+                              onZoomOut={() => console.log('Zoom out')}
+                              onReset={() => console.log('Reset')}
+                              onFullscreen={() => console.log('Fullscreen')}
+                              onRecenter={() => console.log('Recenter')}
+                            />
+                          </div>
+                        </MapContainer>
                       </div>
                       <Button
                         variant="outline"
@@ -321,6 +334,206 @@ function App() {
                   </Card>
                 </div>
               </section>
+
+              {/* Form Components */}
+              <section>
+                <h2 className="text-2xl font-semibold mb-4">Form Components</h2>
+                <div className="grid gap-6">
+                  
+                  {/* LocationSearch */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>LocationSearch</CardTitle>
+                      <CardDescription>
+                        Advanced location search with autocomplete, current location, and recent searches
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="rounded-lg border p-6">
+                        <LocationSearch
+                          placeholder="Search for restaurants, hotels, attractions..."
+                          recentLocations={[
+                            { id: '1', name: 'Central Park', address: 'New York, NY', type: 'landmark' },
+                            { id: '2', name: 'Times Square', address: 'Manhattan, NY', type: 'landmark' }
+                          ]}
+                          onLocationSelect={(location) => console.log('Selected:', location)}
+                        />
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => copyToClipboard(
+                          `<LocationSearch placeholder="Search..." onLocationSelect={handleSelect} />`,
+                          'LocationSearch'
+                        )}
+                      >
+                        {copiedCode === 'LocationSearch' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                        Copy Code
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* PriceRange */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>PriceRange</CardTitle>
+                      <CardDescription>
+                        Interactive price range selector with presets and manual input
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex justify-center rounded-lg border p-6">
+                        <PriceRange
+                          min={0}
+                          max={1000}
+                          value={[100, 400]}
+                          onValueChange={(range) => console.log('Price range:', range)}
+                        />
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => copyToClipboard(
+                          `<PriceRange min={0} max={1000} value={[100, 400]} onValueChange={handleChange} />`,
+                          'PriceRange'
+                        )}
+                      >
+                        {copiedCode === 'PriceRange' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                        Copy Code
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* DatePicker */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>DatePicker</CardTitle>
+                      <CardDescription>
+                        Flexible date picker with presets, time slots, and range selection
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded-lg border p-6">
+                        <div>
+                          <h4 className="text-sm font-medium mb-3">Single Date</h4>
+                          <DatePicker
+                            mode="single"
+                            showTimeSlots
+                            onDateChange={(date) => console.log('Selected date:', date)}
+                            onTimeSlotChange={(time) => console.log('Selected time:', time)}
+                          />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-medium mb-3">Date Range</h4>
+                          <DatePicker
+                            mode="range"
+                            onDateChange={(range) => console.log('Selected range:', range)}
+                          />
+                        </div>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => copyToClipboard(
+                          `<DatePicker mode="single" showTimeSlots onDateChange={handleChange} />`,
+                          'DatePicker'
+                        )}
+                      >
+                        {copiedCode === 'DatePicker' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                        Copy Code
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              </section>
+
+              {/* Layout Components */}
+              <section>
+                <h2 className="text-2xl font-semibold mb-4">Layout Components</h2>
+                <div className="grid gap-6">
+                  
+                  {/* Grid */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Grid System</CardTitle>
+                      <CardDescription>
+                        Responsive grid layouts with flexible columns and spacing
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="rounded-lg border p-6">
+                        <h4 className="text-sm font-medium mb-3">Auto-fit Grid</h4>
+                        <Grid cols="auto" gap="md" className="mb-6">
+                          {Array.from({ length: 6 }, (_, i) => (
+                            <div key={i} className="bg-muted rounded-lg p-4 text-center text-sm">
+                              Item {i + 1}
+                            </div>
+                          ))}
+                        </Grid>
+                        
+                        <h4 className="text-sm font-medium mb-3">3-Column Grid</h4>
+                        <Grid cols={3} gap="lg">
+                          {Array.from({ length: 6 }, (_, i) => (
+                            <div key={i} className="bg-primary/10 rounded-lg p-4 text-center text-sm">
+                              Column {i + 1}
+                            </div>
+                          ))}
+                        </Grid>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => copyToClipboard(
+                          `<Grid cols={3} gap="md">{children}</Grid>`,
+                          'Grid'
+                        )}
+                      >
+                        {copiedCode === 'Grid' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                        Copy Code
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Flex */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Flex Utilities</CardTitle>
+                      <CardDescription>
+                        Flexible layout utilities for alignment and spacing
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="rounded-lg border p-6 space-y-4">
+                        <div>
+                          <h4 className="text-sm font-medium mb-2">Center Alignment</h4>
+                          <Flex justify="center" align="center" className="bg-muted rounded-lg p-4">
+                            <div className="bg-primary text-primary-foreground px-3 py-1 rounded">Centered</div>
+                          </Flex>
+                        </div>
+                        
+                        <div>
+                          <h4 className="text-sm font-medium mb-2">Space Between</h4>
+                          <Flex justify="between" align="center" className="bg-muted rounded-lg p-4">
+                            <div className="bg-accent text-accent-foreground px-3 py-1 rounded">Left</div>
+                            <div className="bg-accent text-accent-foreground px-3 py-1 rounded">Right</div>
+                          </Flex>
+                        </div>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => copyToClipboard(
+                          `<Flex justify="between" align="center">{children}</Flex>`,
+                          'Flex'
+                        )}
+                      >
+                        {copiedCode === 'Flex' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                        Copy Code
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              </section>
             </div>
           </TabsContent>
 
@@ -364,20 +577,28 @@ function App() {
 
           {/* Examples Tab */}
           <TabsContent value="examples" className="space-y-6">
+            {/* Complete Marketplace Interface */}
             <Card>
               <CardHeader>
                 <CardTitle>Complete Marketplace Interface</CardTitle>
                 <CardDescription>
-                  A full example combining multiple components
+                  A full example combining multiple components for a real marketplace app
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
-                  {/* Search */}
-                  <SearchOverlay
-                    suggestions={['Restaurants', 'Hotels', 'Coffee shops']}
-                    recentSearches={['Pizza delivery', 'Gas stations']}
-                  />
+                  {/* Search and Filters */}
+                  <Grid cols={3} gap="lg">
+                    <div className="col-span-2">
+                      <SearchOverlay
+                        suggestions={['Restaurants', 'Hotels', 'Coffee shops']}
+                        recentSearches={['Pizza delivery', 'Gas stations']}
+                      />
+                    </div>
+                    <div>
+                      <LocationSearch placeholder="Near..." />
+                    </div>
+                  </Grid>
                   
                   <Separator />
                   
@@ -393,6 +614,9 @@ function App() {
                           <div className="absolute -bottom-6 left-8">
                             <LocationPin size="sm" color="destructive" label="Hotel" />
                           </div>
+                          <div className="absolute top-4 right-6">
+                            <LocationPin size="md" color="success" label="Coffee" />
+                          </div>
                         </div>
                       </div>
                     </MapContainer>
@@ -400,29 +624,226 @@ function App() {
                   
                   <Separator />
                   
-                  {/* Listings grid */}
-                  <div>
-                    <h3 className="text-lg font-semibold mb-4">Nearby Listings</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {sampleListings.map((listing) => (
-                        <ListingCard key={listing.id} {...listing} />
-                      ))}
-                      <ListingCard
-                        title="Luxury Hotel Suite"
-                        description="5-star accommodation with city views"
-                        price="$450/night"
-                        location="Midtown Manhattan"
-                        distance="0.8 mi"
-                        rating={4.9}
-                        reviewCount={256}
-                        category="Hotel"
-                        imageUrl="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop"
+                  {/* Filters and Results */}
+                  <Grid cols={4} gap="lg">
+                    <div>
+                      <CategoryFilter
+                        categories={[
+                          { id: 'restaurant', name: 'Restaurants', count: 24 },
+                          { id: 'hotel', name: 'Hotels', count: 12 },
+                          { id: 'coffee', name: 'Coffee', count: 8 }
+                        ]}
+                        showCounts
                       />
                     </div>
-                  </div>
+                    <div className="col-span-3">
+                      <div className="space-y-4">
+                        <Flex justify="between" align="center">
+                          <h3 className="text-lg font-semibold">Nearby Listings</h3>
+                          <Badge variant="secondary">24 results</Badge>
+                        </Flex>
+                        <Grid cols={2} gap="md">
+                          {sampleListings.map((listing) => (
+                            <ListingCard key={listing.id} {...listing} />
+                          ))}
+                          <ListingCard
+                            id="3"
+                            title="Luxury Hotel Suite"
+                            description="5-star accommodation with city views"
+                            price="$450/night"
+                            location="Midtown Manhattan"
+                            distance="0.8 mi"
+                            rating={4.9}
+                            reviewCount={256}
+                            category="Hotel"
+                            imageUrl="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop"
+                          />
+                          <ListingCard
+                            id="4"
+                            title="Artisan Coffee House"
+                            description="Locally roasted coffee and fresh pastries"
+                            price="$8-15"
+                            location="Greenwich Village"
+                            distance="0.3 mi"
+                            rating={4.7}
+                            reviewCount={89}
+                            category="Coffee"
+                            isNew
+                            imageUrl="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=300&fit=crop"
+                          />
+                        </Grid>
+                      </div>
+                    </div>
+                  </Grid>
                 </div>
               </CardContent>
             </Card>
+
+            {/* Booking Flow Example */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Booking Flow Example</CardTitle>
+                <CardDescription>
+                  Complete booking interface with date selection, pricing, and confirmation
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Grid cols={3} gap="lg">
+                  <div>
+                    <h4 className="font-medium mb-3">Select Dates</h4>
+                    <DatePicker
+                      mode="range"
+                      showTimeSlots
+                    />
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-3">Price Range</h4>
+                    <PriceRange
+                      min={50}
+                      max={500}
+                      value={[100, 300]}
+                      currency="$"
+                    />
+                  </div>
+                  <div className="space-y-4">
+                    <h4 className="font-medium">Booking Summary</h4>
+                    <Card className="p-4">
+                      <div className="space-y-3">
+                        <Flex justify="between">
+                          <span className="text-sm">2 nights</span>
+                          <span className="font-medium">$240</span>
+                        </Flex>
+                        <Flex justify="between">
+                          <span className="text-sm">Service fee</span>
+                          <span className="font-medium">$24</span>
+                        </Flex>
+                        <Separator />
+                        <Flex justify="between">
+                          <span className="font-medium">Total</span>
+                          <span className="font-bold">$264</span>
+                        </Flex>
+                        <Button className="w-full">Book Now</Button>
+                      </div>
+                    </Card>
+                  </div>
+                </Grid>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Documentation Tab */}
+          <TabsContent value="docs" className="space-y-6">
+            <div className="max-w-4xl">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Getting Started</CardTitle>
+                  <CardDescription>
+                    How to use the Map Marketplace Component Library in your project
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Installation</h3>
+                    <div className="bg-muted rounded-lg p-4 font-mono text-sm">
+                      npm install @your-org/map-marketplace-ui
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Basic Usage</h3>
+                    <div className="bg-muted rounded-lg p-4 font-mono text-sm whitespace-pre-wrap">
+{`import { 
+  MapContainer, 
+  LocationPin, 
+  ListingCard,
+  SearchOverlay 
+} from '@your-org/map-marketplace-ui'
+
+function App() {
+  return (
+    <div>
+      <SearchOverlay 
+        suggestions={['Hotels', 'Restaurants']}
+        onSearch={handleSearch}
+      />
+      <MapContainer height="400px">
+        <LocationPin 
+          size="lg" 
+          color="primary" 
+          label="Your Location" 
+        />
+      </MapContainer>
+    </div>
+  )
+}`}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Component Categories</h3>
+                    <Grid cols={2} gap="md">
+                      <Card className="p-4">
+                        <h4 className="font-medium mb-2">Map Components</h4>
+                        <ul className="text-sm text-muted-foreground space-y-1">
+                          <li>• MapContainer - Interactive map wrapper</li>
+                          <li>• LocationPin - Customizable map pins</li>
+                          <li>• MapControls - Zoom and navigation controls</li>
+                        </ul>
+                      </Card>
+                      <Card className="p-4">
+                        <h4 className="font-medium mb-2">Marketplace Components</h4>
+                        <ul className="text-sm text-muted-foreground space-y-1">
+                          <li>• ListingCard - Property/business cards</li>
+                          <li>• SearchOverlay - Advanced search interface</li>
+                          <li>• CategoryFilter - Multi-select filters</li>
+                          <li>• RatingStars - Interactive ratings</li>
+                          <li>• PriceTag - Flexible price display</li>
+                        </ul>
+                      </Card>
+                      <Card className="p-4">
+                        <h4 className="font-medium mb-2">Form Components</h4>
+                        <ul className="text-sm text-muted-foreground space-y-1">
+                          <li>• LocationSearch - Geocoding search</li>
+                          <li>• PriceRange - Range slider with presets</li>
+                          <li>• DatePicker - Date/time selection</li>
+                        </ul>
+                      </Card>
+                      <Card className="p-4">
+                        <h4 className="font-medium mb-2">Layout Components</h4>
+                        <ul className="text-sm text-muted-foreground space-y-1">
+                          <li>• Grid - Responsive grid system</li>
+                          <li>• Flex - Flexbox utilities</li>
+                          <li>• Container - Content containers</li>
+                        </ul>
+                      </Card>
+                    </Grid>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Theming</h3>
+                    <p className="text-muted-foreground mb-3">
+                      All components support custom theming through CSS variables and Tailwind CSS classes.
+                    </p>
+                    <div className="bg-muted rounded-lg p-4 font-mono text-sm whitespace-pre-wrap">
+{`:root {
+  --primary: 217 91% 60%;
+  --accent: 43 96% 56%;
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+}`}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">TypeScript Support</h3>
+                    <p className="text-muted-foreground">
+                      All components are built with TypeScript and include comprehensive type definitions 
+                      for better development experience and type safety.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
         </Tabs>
       </main>
